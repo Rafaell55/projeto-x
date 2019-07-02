@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Teve  implements Serializable{	
 	private static final long serialVersionUID = 1L;
@@ -23,6 +25,7 @@ public class Teve  implements Serializable{
 	private String pacote;
 	private Double preco;
 
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "TEVE_CATEGORIA", // Mapeamento da lista de Categorias
 			joinColumns = @JoinColumn(name = "tv_id"), // informando a chave primaria do produto

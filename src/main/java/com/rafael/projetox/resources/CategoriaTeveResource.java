@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rafael.projetox.domain.Categoria;
-import com.rafael.projetox.services.CategoriaService;
+import com.rafael.projetox.domain.CategoriaTeve;
+import com.rafael.projetox.services.CategoriaTeveService;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaResource {
+@RequestMapping(value = "/teve")
+public class CategoriaTeveResource {
 	
 	@Autowired
-	private CategoriaService service;
+	private CategoriaTeveService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		Categoria obj = service.buscar(id);
-		return ResponseEntity.ok().body(obj);		
+		CategoriaTeve objs = service.buscar(id);
+		return ResponseEntity.ok().body(objs);		
 	}
 
 }
