@@ -8,27 +8,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Categoria implements Serializable{	
+public class Teve  implements Serializable{	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
-	@ManyToMany(mappedBy = "categorias") // informando o outro lado do mapeamento (class produto)
-	private List<Produto> produtos = new ArrayList<>();	
-	
-	public Categoria() {		
+	private String pacote;
+	private Double preco;
+
+	@ManyToMany
+	@JoinTable(name = "TEVE_CATEGORIA", // Mapeamento da lista de Categorias
+			joinColumns = @JoinColumn(name = "tv_id"), // informando a chave primaria do produto
+			inverseJoinColumns = @JoinColumn(name = "categoriatv_id") // informando a chave primaria da categoria
+	)
+	private List<CategoriaTeve> categoriasteve = new ArrayList<>();
+
+	public Teve() {
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Teve(Integer id, String nome, String pacote, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.pacote = pacote;
+		this.preco = preco;
 	}
 
 	public Integer getId() {
@@ -46,16 +56,30 @@ public class Categoria implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<Produto> getProdutos() {
-		return produtos;
+
+	public String getPacote() {
+		return pacote;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setPacote(String pacote) {
+		this.pacote = pacote;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 	
+	public List<CategoriaTeve> getCategoriasteve() {
+		return categoriasteve;
+	}
 
+	public void setCategoriasteve(List<CategoriaTeve> categoriasteve) {
+		this.categoriasteve = categoriasteve;
+	}
 
 	@Override
 	public int hashCode() {
@@ -73,7 +97,7 @@ public class Categoria implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Teve other = (Teve) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -84,7 +108,8 @@ public class Categoria implements Serializable{
 
 	
 
-
 	
 
+	
+	
 }
