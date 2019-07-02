@@ -9,10 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.rafael.projetox.domain.Categoria;
 import com.rafael.projetox.domain.CategoriaTeve;
+import com.rafael.projetox.domain.Cidade;
+import com.rafael.projetox.domain.Estado;
 import com.rafael.projetox.domain.Produto;
 import com.rafael.projetox.domain.Teve;
 import com.rafael.projetox.repositories.CategoriaRepository;
 import com.rafael.projetox.repositories.CategoriaTeveRepository;
+import com.rafael.projetox.repositories.CidadeRepository;
+import com.rafael.projetox.repositories.EstadoRepository;
 import com.rafael.projetox.repositories.ProdutoRepository;
 import com.rafael.projetox.repositories.TeveRepository;
 
@@ -27,6 +31,10 @@ public class ProjetoXApplication implements CommandLineRunner{
 	private ProdutoRepository produtoRepository;
 	@Autowired
 	private TeveRepository teveRepository;
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoXApplication.class, args);
@@ -55,15 +63,28 @@ public class ProjetoXApplication implements CommandLineRunner{
 		p4.getCategorias().addAll(Arrays.asList(cat1));
 		
 		t1.getCategoriasteve().addAll(Arrays.asList(cat2));
-		t2.getCategoriasteve().addAll(Arrays.asList(cat2));
-		
-		
+		t2.getCategoriasteve().addAll(Arrays.asList(cat2));		
 		
 		categoriaRepository.save(Arrays.asList(cat1));
 		categoriaTeveRepository.save(cat2);
 		produtoRepository.save(Arrays.asList(p1, p2, p3, p4));
 		teveRepository.save(Arrays.asList(t1,t2));
 		
+		Estado est1 = new Estado(null, "Minas Gerasis");
+		Estado est2 = new Estado(null, "São Paulo");
+		Estado est3 = new Estado(null, "Ceará");
+		
+		Cidade c1 = new Cidade(null, "Underlândia", est1);
+		Cidade c2 = new Cidade(null, "São Paulo", est2);
+		Cidade c3 = new Cidade(null, "Campinas", est2);
+		Cidade c4 = new Cidade(null, "Fortaleza", est3);
+		
+		est1.getCidades().addAll(Arrays.asList(c1));
+		est2.getCidades().addAll(Arrays.asList(c2,c3));
+		est3.getCidades().addAll(Arrays.asList(c4));
+		
+		estadoRepository.save(Arrays.asList( est1, est2, est3));
+		cidadeRepository.save(Arrays.asList(c1, c2, c3, c4));
 	}
 
 }
