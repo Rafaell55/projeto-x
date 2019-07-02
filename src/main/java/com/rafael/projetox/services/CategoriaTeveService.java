@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.rafael.projetox.domain.CategoriaTeve;
 import com.rafael.projetox.repositories.CategoriaTeveRepository;
+import com.rafael.projetox.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaTeveService {
@@ -14,6 +15,10 @@ public class CategoriaTeveService {
 	
 	public CategoriaTeve buscar(Integer id) {
 		CategoriaTeve objs = rep.findOne(id);
+		if (objs == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id 
+					+ ", Tipo: " + CategoriaTeve.class.getName());
+		}
 		return objs;
 	}
 
