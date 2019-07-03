@@ -2,6 +2,7 @@ package com.rafael.projetox.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class Cliente implements Serializable{
 	private String email;
 	private String cpfOuCnpj;
 	private String rg;
-	private String dataNascimento;
+	private Date dataNascimento;
 	private Integer tipo;
 	
 	
@@ -40,10 +41,13 @@ public class Cliente implements Serializable{
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	public Cliente() {		
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, String rg, String dataNascimento,
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, String rg, Date dataNascimento,
 			TipoCliente tipo) {
 		super();
 		this.id = id;
@@ -95,11 +99,11 @@ public class Cliente implements Serializable{
 		this.rg = rg;
 	}
 
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -125,6 +129,14 @@ public class Cliente implements Serializable{
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override
@@ -153,7 +165,4 @@ public class Cliente implements Serializable{
 	}
 
 	
-	
-	
-
 }
