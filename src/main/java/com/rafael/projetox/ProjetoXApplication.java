@@ -1,5 +1,6 @@
 package com.rafael.projetox;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.rafael.projetox.domain.Categoria;
 import com.rafael.projetox.domain.CategoriaTeve;
 import com.rafael.projetox.domain.Cidade;
+import com.rafael.projetox.domain.Cliente;
+import com.rafael.projetox.domain.Endereco;
 import com.rafael.projetox.domain.Estado;
 import com.rafael.projetox.domain.Produto;
 import com.rafael.projetox.domain.Teve;
+import com.rafael.projetox.domain.enums.TipoCliente;
 import com.rafael.projetox.repositories.CategoriaRepository;
 import com.rafael.projetox.repositories.CategoriaTeveRepository;
 import com.rafael.projetox.repositories.CidadeRepository;
+import com.rafael.projetox.repositories.ClienteRepository;
+import com.rafael.projetox.repositories.EnderecoRepository;
 import com.rafael.projetox.repositories.EstadoRepository;
 import com.rafael.projetox.repositories.ProdutoRepository;
 import com.rafael.projetox.repositories.TeveRepository;
@@ -35,6 +41,10 @@ public class ProjetoXApplication implements CommandLineRunner{
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoXApplication.class, args);
@@ -85,6 +95,25 @@ public class ProjetoXApplication implements CommandLineRunner{
 		
 		estadoRepository.save(Arrays.asList( est1, est2, est3));
 		cidadeRepository.save(Arrays.asList(c1, c2, c3, c4));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", "2019500200" , "02/05/2000" , TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Cliente cli2 = new Cliente(null, "Rafael Souza", "rafael-souza4@hotmail.com", "68078489005", "115144006" , "22/05/2015" , TipoCliente.PESSOAJURIDICA);
+		cli2.getTelefones().addAll(Arrays.asList("27258000", "93573393"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apt 303", "Jardim", "38220834", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+		Endereco e3 = new Endereco(null, "Av. 13 de Maio", "1310", null, "Benfica", "3258478", cli2, c4);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
+		
+		
+		clienteRepository.save(Arrays.asList(cli1, cli2));
+		enderecoRepository.save(Arrays.asList(e1, e2, e3));
+		
+		
 	}
 
 }
