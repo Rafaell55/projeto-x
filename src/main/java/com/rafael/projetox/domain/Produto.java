@@ -2,7 +2,9 @@ package com.rafael.projetox.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,7 +27,7 @@ public class Produto implements Serializable{
 	private String plano;
 	private String download;
 	private String upload;
-	private Double valor;
+	private Double preco;
 	private String fidelidade;
 	
 	@JsonBackReference
@@ -33,19 +36,31 @@ public class Produto implements Serializable{
 		joinColumns = @JoinColumn(name = "produto_id"), // informando a chave primaria do produto
 		inverseJoinColumns = @JoinColumn(name = "categoria_id") // informando a chave primaria da categoria
 	)
+	
 	private List<Categoria> categorias = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Produto() {		
 	}
 
-	public Produto(Integer id, String plano, String download, String upload, Double valor, String fidelidade) {
+	public Produto(Integer id, String plano, String download, String upload, Double preco, String fidelidade) {
 		super();
 		this.id = id;
 		this.plano = plano;
 		this.download = download;
 		this.upload = upload;
-		this.valor = valor;
+		this.preco = preco;
 		this.fidelidade = fidelidade;
+	}
+	
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		return lista;
 	}
 
 	public Integer getId() {
@@ -81,11 +96,11 @@ public class Produto implements Serializable{
 	}
 
 	public Double getValor() {
-		return valor;
+		return preco;
 	}
 
 	public void setValor(Double valor) {
-		this.valor = valor;
+		this.preco = valor;
 	}
 
 	public String getFidelidade() {
@@ -102,6 +117,14 @@ public class Produto implements Serializable{
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	@Override
@@ -127,8 +150,7 @@ public class Produto implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
+	}	
 	
 
 }

@@ -2,7 +2,9 @@ package com.rafael.projetox.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -32,6 +35,9 @@ public class Teve  implements Serializable{
 			inverseJoinColumns = @JoinColumn(name = "categoriatv_id") // informando a chave primaria da categoria
 	)
 	private List<CategoriaTeve> categoriasteve = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "id.teve")
+	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Teve() {
 	}
@@ -42,6 +48,14 @@ public class Teve  implements Serializable{
 		this.nome = nome;
 		this.pacote = pacote;
 		this.preco = preco;
+	}
+	
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		return lista;
 	}
 
 	public Integer getId() {
@@ -83,6 +97,15 @@ public class Teve  implements Serializable{
 	public void setCategoriasteve(List<CategoriaTeve> categoriasteve) {
 		this.categoriasteve = categoriasteve;
 	}
+	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -108,11 +131,6 @@ public class Teve  implements Serializable{
 			return false;
 		return true;
 	}
-
-	
-
-	
-
 	
 	
 }

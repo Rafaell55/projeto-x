@@ -14,6 +14,7 @@ import com.rafael.projetox.domain.Cidade;
 import com.rafael.projetox.domain.Cliente;
 import com.rafael.projetox.domain.Endereco;
 import com.rafael.projetox.domain.Estado;
+import com.rafael.projetox.domain.ItemPedido;
 import com.rafael.projetox.domain.Pagamento;
 import com.rafael.projetox.domain.PagamentoComBoleto;
 import com.rafael.projetox.domain.PagamentoComCartao;
@@ -28,6 +29,7 @@ import com.rafael.projetox.repositories.CidadeRepository;
 import com.rafael.projetox.repositories.ClienteRepository;
 import com.rafael.projetox.repositories.EnderecoRepository;
 import com.rafael.projetox.repositories.EstadoRepository;
+import com.rafael.projetox.repositories.ItemPedidoRepository;
 import com.rafael.projetox.repositories.PagamentoRepository;
 import com.rafael.projetox.repositories.PedidoRepository;
 import com.rafael.projetox.repositories.ProdutoRepository;
@@ -56,6 +58,8 @@ public class ProjetoXApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoXApplication.class, args);
@@ -144,6 +148,28 @@ public class ProjetoXApplication implements CommandLineRunner{
 		
 		pedidoRepository.save(Arrays.asList(ped1, ped2, ped3));
 		pagamentoRepository.save(Arrays.asList(pagto1, pagto2, pagto3));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, t2, 0.00, 1, 59.90);
+		ItemPedido ip2 = new ItemPedido(ped2, p1, t1, 20.00, 1, 100.80 );		
+		ItemPedido ip3 = new ItemPedido(ped3, p4, t2, 50.00, 1, 165.80 );
+		ItemPedido ip4 = new ItemPedido(ped1, p2,t1, 0.00, 1, 65.90);
+		ItemPedido ip5 = new ItemPedido(ped3, p3, t2, 0.00, 1, 125.80);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip4));
+		ped2.getItens().addAll(Arrays.asList(ip2));
+		ped3.getItens().addAll(Arrays.asList(ip3, ip5));
+		
+		p1.getItens().addAll(Arrays.asList(ip1,ip2)); 
+		p2.getItens().addAll(Arrays.asList(ip4));
+		p3.getItens().addAll(Arrays.asList(ip5));
+		p4.getItens().addAll(Arrays.asList(ip3));
+		
+		t1.getItens().addAll(Arrays.asList(ip4, ip2));
+		t2.getItens().addAll(Arrays.asList(ip1, ip3, ip5));
+		
+		itemPedidoRepository.save(Arrays.asList(ip1,ip2, ip3, ip4, ip5));
+		
+		
 		
 	}
 
