@@ -13,7 +13,7 @@ public class CategoriaTeveService {
 	@Autowired
 	private CategoriaTeveRepository rep;
 	
-	public CategoriaTeve buscar(Integer id) {
+	public CategoriaTeve find(Integer id) {
 		CategoriaTeve objs = rep.findOne(id);
 		if (objs == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id 
@@ -26,5 +26,11 @@ public class CategoriaTeveService {
 		obj.setId(null);
 		return rep.save(obj);
 	}
+	
+	public CategoriaTeve update(CategoriaTeve obj) {
+		find(obj.getId());
+		return rep.save(obj);
+	}
+
 
 }
