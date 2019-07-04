@@ -1,3 +1,4 @@
+    
 package com.rafael.projetox;
 
 import java.text.SimpleDateFormat;
@@ -113,7 +114,7 @@ public class ProjetoXApplication implements CommandLineRunner{
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", "2019500200" , sdf.parse("05/06/200 00:00") , TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", "2019500200" , sdf.parse("05/06/2000 00:00") , TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
 		Cliente cli2 = new Cliente(null, "Rafael Souza", "rafael-souza4@hotmail.com", "68078489005", "115144006" , sdf.parse("22/05/2015 00:00") , TipoCliente.PESSOAJURIDICA);

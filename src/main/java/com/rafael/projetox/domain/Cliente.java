@@ -14,7 +14,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rafael.projetox.domain.enums.TipoCliente;
 
@@ -26,9 +29,10 @@ public class Cliente implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String email;
+	private String email;	
 	private String cpfOuCnpj;
 	private String rg;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	private Integer tipo;
 	
@@ -41,6 +45,7 @@ public class Cliente implements Serializable{
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
