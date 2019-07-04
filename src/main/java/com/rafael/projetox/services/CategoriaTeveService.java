@@ -21,5 +21,10 @@ public class CategoriaTeveService {
 		}
 		return objs;
 	}
+	
+	public CategoriaTeve insert(CategoriaTeve obj) {
+		obj.setId(null);
+		return rep.save(obj);
+	}
 
 }

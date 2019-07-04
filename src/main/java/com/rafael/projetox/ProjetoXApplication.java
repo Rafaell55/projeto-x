@@ -153,7 +153,7 @@ public class ProjetoXApplication implements CommandLineRunner{
 		ItemPedido ip1 = new ItemPedido(ped1, p1, t2, 0.00, 1, 59.90);
 		ItemPedido ip2 = new ItemPedido(ped2, p1, t1, 20.00, 1, 100.80 );		
 		ItemPedido ip3 = new ItemPedido(ped3, p4, t2, 50.00, 1, 165.80 );
-		ItemPedido ip4 = new ItemPedido(ped1, p2,t1, 0.00, 1, 65.90);
+		ItemPedido ip4 = new ItemPedido(ped1, p2,t1, 0.00, 1, 69.90);
 		ItemPedido ip5 = new ItemPedido(ped3, p3, t2, 0.00, 1, 125.80);
 		
 		ped1.getItens().addAll(Arrays.asList(ip1, ip4));
