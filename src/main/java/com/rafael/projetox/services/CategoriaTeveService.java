@@ -1,10 +1,12 @@
 package com.rafael.projetox.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.rafael.projetox.domain.CategoriaTeve;
 import com.rafael.projetox.repositories.CategoriaTeveRepository;
+import com.rafael.projetox.services.exceptions.DataIntegrityException;
 import com.rafael.projetox.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,5 +34,15 @@ public class CategoriaTeveService {
 		return rep.save(obj);
 	}
 
+	public void delete(Integer id) {
+		find(id);
+		try {
+			rep.delete(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+		}
+	}
+	
 
 }
